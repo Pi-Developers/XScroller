@@ -1,8 +1,8 @@
 package com.pi_developers.xscroller.hook;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -36,11 +36,11 @@ public class ActivityHook extends Hook {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_VOLUME_UP:
                         if (action == KeyEvent.ACTION_DOWN) {
-                            Log.d(TAG_NAME,"Pressed Volume Up");
+                            Toast.makeText(activity.getApplicationContext(),"Volume Up",Toast.LENGTH_SHORT).show();
                         }
                     case KeyEvent.KEYCODE_VOLUME_DOWN:
                         if (action == KeyEvent.ACTION_DOWN) {
-                            Log.d(TAG_NAME,"Pressed Volume Down");
+                            Toast.makeText(activity.getApplicationContext(),"Volume Down",Toast.LENGTH_SHORT).show();
                         }
                     default:
                 }
