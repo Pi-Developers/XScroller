@@ -204,7 +204,7 @@ public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResou
                         if (smooth_scroll) {
                             scrollView.smoothScrollTo(displayMetrics.widthPixels + factor,displayMetrics.heightPixels);
                         }else {
-                            scrollView.scrollTo(displayMetrics.widthPixels + factor,displayMetrics.heightPixels+factor);
+                            scrollView.scrollTo(displayMetrics.widthPixels + factor,displayMetrics.heightPixels);
                         }
 
                     }else if(POLICY_TO_SCROLL == HORIZONTAL_SCROLL){
@@ -213,7 +213,7 @@ public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResou
                         if (smooth_scroll) {
                             scrollView.smoothScrollTo(displayMetrics.widthPixels - factor,displayMetrics.heightPixels);
                         }else {
-                            scrollView.scrollTo(displayMetrics.widthPixels - factor,displayMetrics.heightPixels+factor);
+                            scrollView.scrollTo(displayMetrics.widthPixels - factor,displayMetrics.heightPixels);
                         }
                     }
                 }else {
