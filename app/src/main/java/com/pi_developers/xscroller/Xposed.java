@@ -13,6 +13,7 @@ import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -40,17 +41,25 @@ public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResou
 
         handleActivity(lpparam.classLoader);
         initZScrollView(lpparam.classLoader);
+        initUtils(lpparam.classLoader);
 
+    }
+
+    private void initUtils(ClassLoader classLoader) {
+        final Class<?> aClass = XposedHelpers.findClass("com.pi_developers.xscroller.Utils", classLoader);
+
+        XposedHelpers.findAndHookMethod(aClass,"isModuleActive", XC_MethodReplacement.returnConstant(Boolean.TRUE));
     }
 
     @Override
     public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam initPackageResourcesParam) throws Throwable {
 
     }
+    //
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-        xSharedPreferences =  new XSharedPreferences(sahidalmas.xposed.util.Xposed.class.getPackage().getName());
+        xSharedPreferences =  new XSharedPreferences(Xposed.class.getPackage().getName());
         xSharedPreferences.makeWorldReadable();
         xSharedPreferences.reload();
 
