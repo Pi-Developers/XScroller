@@ -4,4 +4,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="module_not_activated">XScroller Module is not Activated. Activate it to use this Module</string>
+    <string name="ic_gen">General</string>
+    <string name="fa_scr">Factor of Scrolling</string>
+    <string name="per_ev_s">Per event scroll factor (Reboot Required)</string>
+    <string name="scr">Scrolling Policy</string>
+    <string name="scr_p">Scrolling Policy means how you want to scroll</string>
+    <string name="ss">Scrolling Style</string>
+    <string name="scr_s">How you want to Scroll</string>
+    <array name="ScrollingPolicy">
+        <item>Vertical</item>
+        <item>Horizontal</item>
+    </array>
+
+    <array name="ScrollingStyle">
+        <item>Smooth</item>
+        <item>Rough</item>
+    </array>
 </resources>

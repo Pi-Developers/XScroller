@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/ic_gen" />
+    <ListPreference android:title="@string/scr" android:key="scr_policy" android:summary="@string/scr_p" android:entries="@array/ScrollingPolicy" android:entryValues="@array/ScrollingPolicy"/>
+    <ListPreference android:title="@string/ss" android:key="scr_style" android:summary="@string/scr_s" android:entries="@array/ScrollingStyle" android:entryValues="@array/ScrollingStyle"/>
+
+
+    <com.pi_developers.xscroller.widget.SeekBarPreference android:key="factor" android:title="@string/fa_scr" android:summary="@string/per_ev_s"/>
+</PreferenceScreen>

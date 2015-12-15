@@ -14,7 +14,7 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent = new Intent();
 
-        if (Utils.isModuleActive()) {
+       if (Utils.isModuleActive()) {
                 intent.setClass(getApplicationContext(), Main.class);
         } else {
                 intent.setClass(getApplicationContext(), ModuleNotActivated.class);

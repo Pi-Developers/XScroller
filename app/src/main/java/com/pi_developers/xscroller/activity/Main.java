@@ -1,16 +1,89 @@
 package com.pi_developers.xscroller.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import com.pi_developers.xscroller.R;
+
+import com.pi_developers.xscroller.Xposed;
+import com.pi_developers.xscroller.widget.SeekBarPreference;
+
 import al.androidfire.loltint.Color;
 import al.androidfire.loltint.LolTint;
 
-public class Main extends ActionBarActivity {
+public class Main extends PreferenceActivity {
+    private SeekBarPreference mFactorPreference;
+    private SharedPreferences sharedPreferences;
+
+    private ListPreference ScrollStyle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.COLOR_TEAL));
+
+
+        assert getActionBar() != null;
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.COLOR_TEAL));
+
+
+        addPreferencesFromResource(R.xml.settings);
+
+        sharedPreferences = getSharedPreferences(Xposed.class.getPackage().getName(), Context.MODE_WORLD_READABLE);
+
+        mFactorPreference = (SeekBarPreference)findPreference("factor");
+
+
+        ListPreference scrollPolicy = (ListPreference) findPreference("scr_policy");
+        ScrollStyle  = (ListPreference)findPreference("scr_style");
+        mFactorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                int value = mFactorPreference.getProgress();
+                sharedPreferences.edit().putInt("scroll_factor", value).apply();
+
+                return true;
+            }
+        });
+        ScrollStyle.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String result = null;
+                if (newValue instanceof String) {
+                    result = (String) newValue;
+
+                }
+
+                if (result.equalsIgnoreCase("Smooth")) {
+                    sharedPreferences.edit().putBoolean("smooth_scroll",true).apply();
+                }
+                else {
+                    sharedPreferences.edit().putBoolean("smooth_scroll",false).apply();
+                }
+                return true;
+            }
+        });
+        scrollPolicy.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String result = null;
+                if (newValue instanceof String) {
+                    result = (String) newValue;
+
+                }
+
+                if (result.equalsIgnoreCase("Vertical")) {
+                    sharedPreferences.edit().putInt("scrolling_policy", Xposed.VERTICAL_SCROLL).apply();
+                } else {
+                    sharedPreferences.edit().putInt("scrolling_policy", Xposed.HORIZONTAL_SCROLL).apply();
+                }
+
+                return true;
+            }
+        });
+
     }
 
     @Override
