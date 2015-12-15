@@ -14,14 +14,14 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent = new Intent();
 
-            if (Utils.isModuleActive()) {
+        if (Utils.isModuleActive()) {
                 intent.setClass(getApplicationContext(), Main.class);
-            } else {
+        } else {
                 intent.setClass(getApplicationContext(), ModuleNotActivated.class);
-            }
-            startActivity(intent);
-            startActivity(intent);
-            finish();
+        }
+        startActivity(intent);
+
+        finish();
 
 
 

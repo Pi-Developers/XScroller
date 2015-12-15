@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.widget.ScrollView;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
@@ -163,6 +164,8 @@ public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResou
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+
+                DisplayMetrics displayMetrics = context.getApplicationContext().getResources().getDisplayMetrics();
                 xSharedPreferences.reload();
                 int POLICY_TO_SCROLL = xSharedPreferences.getInt("scrolling_policy",VERTICAL_SCROLL);
                 Object object = intent.getExtras().get("scr");
@@ -172,19 +175,46 @@ public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResou
                 }
 
 
+                xSharedPreferences.reload();
+                boolean smooth_scroll = xSharedPreferences.getBoolean("smooth_scroll",true);
+                int factor = xSharedPreferences.getInt("scroll_factor",5);
                 if (code == VOLUME_DOWN_PRESSED) {
 
                     if (POLICY_TO_SCROLL == VERTICAL_SCROLL) {
                         XposedBridge.log("DOWN_VERTICAL SCROLLING");
+                        if (smooth_scroll) {
+                            scrollView.smoothScrollTo(displayMetrics.widthPixels,displayMetrics.heightPixels + factor);
+                        }else {
+                            scrollView.scrollTo(displayMetrics.widthPixels, displayMetrics.heightPixels + factor);
+                        }
+
                     }else if(POLICY_TO_SCROLL == HORIZONTAL_SCROLL){
                         XposedBridge.log("DOWN_HORIZONTAL SCROLLING");
+                        if (smooth_scroll) {
+                            scrollView.smoothScrollTo(displayMetrics.widthPixels,displayMetrics.heightPixels - factor);
+                        }else {
+                            scrollView.scrollTo(displayMetrics.widthPixels,displayMetrics.heightPixels - factor);
+                        }
+
                     }
 
                 }else if (code == VOLUME_UP_PRESSED) {
                     if (POLICY_TO_SCROLL == VERTICAL_SCROLL) {
                         XposedBridge.log("UP_VERTICAL SCROLLING");
+                        if (smooth_scroll) {
+                            scrollView.smoothScrollTo(displayMetrics.widthPixels + factor,displayMetrics.heightPixels);
+                        }else {
+                            scrollView.scrollTo(displayMetrics.widthPixels + factor,displayMetrics.heightPixels+factor);
+                        }
+
                     }else if(POLICY_TO_SCROLL == HORIZONTAL_SCROLL){
                         XposedBridge.log("UP_HORIZONTAL SCROLLING");
+
+                        if (smooth_scroll) {
+                            scrollView.smoothScrollTo(displayMetrics.widthPixels - factor,displayMetrics.heightPixels);
+                        }else {
+                            scrollView.scrollTo(displayMetrics.widthPixels - factor,displayMetrics.heightPixels+factor);
+                        }
                     }
                 }else {
                     XposedBridge.log("Something Went Wrong");
