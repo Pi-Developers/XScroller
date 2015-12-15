@@ -22,7 +22,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 /**
  * @author Sahid Almas
  */
-public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageResources,
+public class Xposed implements IXposedHookZygoteInit,IXposedHookInitPackageResources,
         IXposedHookLoadPackage{
 
     private XSharedPreferences xSharedPreferences;
@@ -59,7 +59,9 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
         initZScrollView(null);
 
     }
+
     private void handleActivity(ClassLoader classLoader) {
+
         final Class<?> classActivity = XposedHelpers.findClass("android.app.Activity", classLoader);
 
         XposedHelpers.findMethodExact(classActivity, "dispatchKeyEvent", KeyEvent.class);
@@ -72,7 +74,9 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
         });
     }
 
+
     private void dispatchKeyEvent(XC_MethodHook.MethodHookParam param) {
+
         Activity activity = null;
         KeyEvent event = null;
         if (param.thisObject instanceof Activity) {
@@ -109,13 +113,16 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
     }
 
     private void sendBroadcast(Context context,int _id) {
+
         xSharedPreferences.reload();
         Intent intent = new Intent();
         intent.setAction(PACKAGE_NAME);
         intent.putExtra("scr",_id);
         context.getApplicationContext().sendBroadcast(intent);
     }
+
     private void initZScrollView(ClassLoader classLoader) {
+
         final Class<?> aClass = XposedHelpers.findClass("android.widget.ScrollView", classLoader);
         XposedHelpers.findAndHookConstructor(aClass, Context.class, AttributeSet.class, new XC_MethodHook() {
             @Override
@@ -129,7 +136,7 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
                 for (Object object : param.args) {
                     if (object instanceof Context) {
                         context = (Context) object;
-                    }else if (object instanceof AttributeSet) {
+                    } else if (object instanceof AttributeSet) {
                         attributeSet = (AttributeSet) object;
                     }
                 }
@@ -140,6 +147,7 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
             }
         });
     }
+
     private void handleScrollViewBroadCast(final ScrollView scrollView) {
 
 
