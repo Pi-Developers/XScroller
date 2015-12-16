@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/about_content"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="120dip"
+        android:layout_height="90dip"
+        android:id="@+id/app_icon_about"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dip"
+        android:textColor="@android:color/white"
+        android:textStyle="italic"
+        android:typeface="monospace"
+        android:text="@string/app_name"
+        android:paddingBottom="40dip"
+        android:id="@+id/app_about_name"
+        android:layout_above="@+id/app_icon_about"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="25dip"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/current_version"
+        android:id="@+id/version_about"
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/app_icon_about"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dip"
+        android:layout_gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingTop="10dip"
+        android:id="@+id/copy_right_txt"
+        android:layout_below="@+id/app_icon_about"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
+</LinearLayout>

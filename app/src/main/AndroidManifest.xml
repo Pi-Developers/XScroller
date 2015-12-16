@@ -19,7 +19,11 @@
         <activity
             android:theme="@style/AppTheme"
             android:name=".activity.ModuleNotActivated" />
-        <activity android:name=".activity.Main" android:theme="@android:style/Theme.Material.Light.DarkActionBar" />
+        <activity
+            android:theme="@style/AppTheme"
+            android:name=".activity.About" />
+
+        <activity android:name=".activity.Main"  />
         <meta-data
             android:name="xposedmodule"
             android:value="true" />

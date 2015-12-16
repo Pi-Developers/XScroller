@@ -1,8 +1,10 @@
 package com.pi_developers.xscroller.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -20,10 +22,12 @@ public class Main extends PreferenceActivity {
     private SharedPreferences sharedPreferences;
 
     private ListPreference ScrollStyle;
+    private Preference mAbout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 21)
+        setTheme(android.R.style.Theme_Material_Light_DarkActionBar);
         super.onCreate(savedInstanceState);
-
 
         assert getActionBar() != null;
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.COLOR_TEAL));
@@ -35,6 +39,16 @@ public class Main extends PreferenceActivity {
 
         mFactorPreference = (SeekBarPreference)findPreference("factor");
 
+        mAbout = (Preference) findPreference("about_matter");
+        mAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(),About.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         ListPreference scrollPolicy = (ListPreference) findPreference("scr_policy");
         ScrollStyle  = (ListPreference)findPreference("scr_style");
